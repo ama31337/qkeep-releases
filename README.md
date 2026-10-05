@@ -4,6 +4,7 @@ This public repository contains checksums and a verifier, not the wallet source.
 
 ```
 node verify.mjs https://wallet.qkeep.app
+node verify.mjs https://wallet.qkeep.app https://wallet.qtcscan.com https://qtcwallet.lux8.net
 node verify.mjs --extension /path/to/downloaded-store.zip
 node verify.mjs --extension /path/to/unpacked-extension
 node verify.mjs --version 1.66.0 https://wallet.qkeep.app
