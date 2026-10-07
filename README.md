@@ -1,4 +1,34 @@
-# Qkeep release verification
+# Qkeep: Quantus (QTC) web wallet and Chrome extension
+
+Qkeep is a non-custodial wallet for Quantus (QTC). Your keys stay on your device, every transfer is signed there with post-quantum ML-DSA signatures, and nothing secret is ever sent to a server.
+
+- Web wallet: https://wallet.qkeep.app
+- Chrome extension: https://chromewebstore.google.com/detail/qkeep-wallet-for-quantus/jbnhafgbblfhpkbipihplgcgdebkdeef
+- Website and guides: https://qkeep.app
+- Help: https://wallet.qkeep.app/help/
+- Privacy policy: https://wallet.qkeep.app/privacy/
+- Contact: hello@qkeep.app, X [@Qkeep_app](https://x.com/Qkeep_app)
+
+## Features
+
+- Send and receive QTC, with QR scan to fill in the recipient.
+- Several 24-word seeds and many accounts in one wallet; restoring a seed finds the accounts it holds. Imported private keys are supported and can be backed up behind your password.
+- Private sends from Encrypted Accounts, with the zero-knowledge proof built on your device.
+- Extra privacy mode (opt-in): Encrypted Accounts are checked on your device from the full public feed instead of asking our server about your address. Even in normal mode, spent checks use padded buckets with decoys and proof requests carry no address.
+- Device unlock with Face ID or Touch ID on supported devices.
+- Live QTC price and transfer tracking until finality.
+- English and Simplified Chinese.
+
+## Security model
+
+- The wallet is encrypted with your password (PBKDF2 and AES-GCM) and stored in your browser's storage. The seed and private keys never leave your device.
+- Signing runs in a separate worker on your device. Our relay never receives secrets: it sees addresses for balance and history lookups, fee estimate requests, signed transactions to broadcast and connection metadata such as your IP address. See the privacy policy for the full list.
+- Releases are verifiable: this repository publishes the SHA-256 list of every file the web wallet and the Chrome extension ship, so you can check that what you run is exactly what was published. See below.
+- The source code is not public. Verification proves that everyone receives the same published bytes, not that the code is safe.
+
+Built by the [lux8.net](https://lux8.net) team, who also run the [qtcscan.com](https://qtcscan.com) explorer. Not affiliated with or operated by the Quantus Network project.
+
+## Release verification
 
 This public repository contains checksums and a verifier, not the wallet source. Obtain this repository through GitHub independently of the wallet site. Use Node.js 20 or newer. No dependencies or wallet recovery phrase are needed.
 
