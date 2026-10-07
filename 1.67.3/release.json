@@ -1,15 +1,15 @@
 {
   "extension": {
     "metadata": true,
-    "releaseHash": "41b02d6763e238dafa72928056a660fc11d8aeb6064bd75a1f3b68189b3b5c19",
+    "releaseHash": "83105a22e4cec79b664a3c5ec876dbd2803a35b8fe4f927e9967eb1c8627d636",
     "zipName": "qtc-wallet-extension-1.67.3-store.zip",
-    "zipSha256": "e6a2a2f50d74272b526a5f00898b87ed163b022ee7962734a9124e5dc2f6e940"
+    "zipSha256": "b8e62f1c21c6e47a3fe9bf7244bdea59d3db4ef0081d7adb7a85771e36f75134"
   },
   "unpacked": {
     "metadata": true,
-    "releaseHash": "a8f5d6220fca955b948af8cca5ba9fd8d0ff2ffc986fa4bac23bb8bb5b8eecb3",
+    "releaseHash": "180d7acc15c4d5dfb20dbc91f0af2f8f98df2437389ceac3d3f1fe61f3e6a027",
     "zipName": "qtc-wallet-extension-1.67.3.zip",
-    "zipSha256": "359506479d5a5a727b4ee26df63e450a1b008c1f523eac663e231dc17dda4809"
+    "zipSha256": "9daa0ff654f60b3df333327ff2ae21f1dfdf2fec2c50bceb78a966c235e2403e"
   },
   "version": "1.67.3",
   "web": {
