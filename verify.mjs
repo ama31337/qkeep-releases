@@ -27,10 +27,18 @@ async function authoritative(v,kind){
   }
   return {entries,details};
 }
-async function get(url){
+// Bodies are read with byte budgets: 64 MB per file, 1 GB per run, 1 MB for metadata.
+const FILE_LIMIT=64*1024*1024,META_LIMIT=1024*1024;let budget=1024*1024*1024;
+async function body(response,limit){
+  const chunks=[];let size=0;const reader=response.body.getReader();
+  for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;budget-=value.length;
+    if(size>limit||budget<0){await reader.cancel().catch(()=>{});fail('Response too large');}chunks.push(value);}
+  return Buffer.concat(chunks);
+}
+async function get(url,limit=FILE_LIMIT){
   const response=await fetch(url,{redirect:'error',cache:'no-store',signal:AbortSignal.timeout(60000)});
   if(!response.ok)fail(`HTTP ${response.status}: ${url}`);
-  return Buffer.from(await response.arrayBuffer());
+  return body(response,limit);
 }
 async function web(origin,v){
   const base=new URL(origin);
@@ -38,9 +46,9 @@ async function web(origin,v){
   if(base.protocol==='http:'&&!['localhost','127.0.0.1','[::1]'].includes(base.hostname))fail('HTTPS required outside localhost');
   if(!v){
     const r=await fetch(new URL('/release.json',base),{redirect:'error',cache:'no-store',signal:AbortSignal.timeout(60000)});
-    if(r.ok)v=version(json(Buffer.from(await r.arrayBuffer())).version);
+    if(r.ok)v=version(json(await body(r,META_LIMIT)).version);
     else if(r.status===404){
-      const text=(await get(new URL('/version.js',base))).toString(),m=/QUANTUS_VERSION\s*=\s*['"](\d+\.\d+\.\d+)['"]/.exec(text);
+      const text=(await get(new URL('/version.js',base),META_LIMIT)).toString(),m=/QUANTUS_VERSION\s*=\s*['"](\d+\.\d+\.\d+)['"]/.exec(text);
       if(!m)fail('Cannot identify legacy release');v=m[1];
     }else fail('Cannot identify served release: HTTP '+r.status);
   }
