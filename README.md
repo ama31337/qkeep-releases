@@ -1,9 +1,10 @@
-# Qkeep: Quantus (QTC) web wallet and Chrome extension
+# Qkeep: Quantus (QTC) wallet for web, Chrome and Android
 
 Qkeep is a non-custodial wallet for Quantus (QTC). Your keys stay on your device, every transfer is signed there with post-quantum ML-DSA signatures, and nothing secret is ever sent to a server.
 
 - Web wallet: https://wallet.qkeep.app
 - Chrome extension: https://chromewebstore.google.com/detail/qkeep-wallet-for-quantus/jbnhafgbblfhpkbipihplgcgdebkdeef
+- Android app: https://play.google.com/store/apps/details?id=app.qkeep.wallet
 - Website and guides: https://qkeep.app
 - Help: https://wallet.qkeep.app/help/
 - Privacy policy: https://wallet.qkeep.app/privacy/
@@ -23,7 +24,7 @@ Qkeep is a non-custodial wallet for Quantus (QTC). Your keys stay on your device
 
 - The wallet is encrypted with your password (PBKDF2 and AES-GCM) and stored in your browser's storage. The seed and private keys never leave your device.
 - Signing runs in a separate worker on your device. Our relay never receives secrets: it sees addresses for balance and history lookups, fee estimate requests, signed transactions to broadcast and connection metadata such as your IP address. See the privacy policy for the full list.
-- Releases are verifiable: this repository publishes the SHA-256 list of every file the web wallet and the Chrome extension ship, so you can check that what you run is exactly what was published. See below.
+- Releases are verifiable: this repository publishes the SHA-256 list of every file the web wallet and the Chrome extension ship, so you can check that what you run is exactly what was published. See below. The Android app is distributed and signed through Google Play and is not covered by these lists.
 - The source code is not public. Verification proves that everyone receives the same published bytes, not that the code is safe.
 
 Built by the [lux8.net](https://lux8.net) team, who also run the [qtcscan.com](https://qtcscan.com) explorer. Not affiliated with or operated by the Quantus Network project.
