@@ -108,9 +108,25 @@ async function extension(path,v){
   for(const name of entries.keys())if(!name.startsWith('_metadata/')&&!expected.has(name))fail('Unexpected file: '+name);
   console.log(`PASS extension v${v}: ${expected.size} files, release ${details.releaseHash}${zip?', ZIP hash matched':''}`);
 }
+// Android: the wallet files bundled in an APK. Accepts the published APK or the base.apk of a Play
+// install (adb shell pm path app.qkeep.wallet). Native code and the signature are not checked here.
+async function android(path,v){
+  path=resolve(path);const stat=await lstat(path);if(!stat.isFile())fail('Give the APK file');if(stat.size>512*1024*1024)fail('Archive exceeds 512 MiB budget');
+  const apk=await readFile(path),files=new Map();
+  for(const [name,data] of unzip(apk))if(name.startsWith('assets/')&&!name.startsWith('assets/dexopt/'))files.set(name.slice(7),data);
+  const m=/QUANTUS_VERSION\s*=\s*['"](\d+\.\d+\.\d+)['"]/.exec((files.get('public/version.js')||fail('Not a Qkeep APK')).toString());
+  if(!m)fail('Cannot identify the bundled release');v=v||m[1];if(m[1]!==v)fail('Bundled wallet version differs');
+  const {entries:expected,details}=await authoritative(v,'android');
+  for(const [name,digest]of expected)if(!files.has(name)||hash(files.get(name))!==digest)fail('Missing or changed file: assets/'+name);
+  for(const name of files.keys())if(!expected.has(name))fail('Unexpected file: assets/'+name);
+  const exact=hash(apk)===details.apkSha256;
+  console.log(`PASS Android v${v}: ${expected.size} bundled files, release ${details.releaseHash}${exact?', APK hash matched the published '+details.apkName:''}`);
+  console.log(`Signature: apksigner verify --print-certs must show certificate SHA-256 ${details.signerSha256}`);
+}
 try{
   const args=process.argv.slice(2);let v;const i=args.indexOf('--version');if(i>=0){v=version(args[i+1]);args.splice(i,2);}
   if(args[0]==='--extension'&&args.length===2)await extension(args[1],v);
+  else if(args[0]==='--android'&&args.length===2)await android(args[1],v);
   else if(args.length&&!args.some(a=>a.startsWith('--')))for(const origin of args)await web(origin,v);
-  else fail('Usage: node verify.mjs [--version X.Y.Z] https://wallet.qkeep.app [other origins] | --extension <directory-or-zip>');
+  else fail('Usage: node verify.mjs [--version X.Y.Z] https://wallet.qkeep.app [other origins] | --extension <directory-or-zip> | --android <apk>');
 }catch(error){console.error('FAIL: '+error.message);process.exitCode=1;}

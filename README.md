@@ -24,7 +24,7 @@ Qkeep is a non-custodial wallet for Quantus (QTC). Your keys stay on your device
 
 - The wallet is encrypted with your password (PBKDF2 and AES-GCM) and stored in your browser's storage. The seed and private keys never leave your device.
 - Signing runs in a separate worker on your device. Our relay never receives secrets: it sees addresses for balance and history lookups, fee estimate requests, signed transactions to broadcast and connection metadata such as your IP address. See the privacy policy for the full list.
-- Releases are verifiable: this repository publishes the SHA-256 list of every file the web wallet and the Chrome extension ship, so you can check that what you run is exactly what was published. See below. The Android app is distributed and signed through Google Play and is not covered by these lists.
+- Releases are verifiable: this repository publishes the SHA-256 list of every file the web wallet and the Chrome extension ship, so you can check that what you run is exactly what was published. From v1.68.0 the same applies to the wallet files bundled in the Android app. See below.
 - The source code is not public. Verification proves that everyone receives the same published bytes, not that the code is safe.
 
 Built by the [lux8.net](https://lux8.net) team, who also run the [qtcscan.com](https://qtcscan.com) explorer. Not affiliated with or operated by the Quantus Network project.
@@ -38,6 +38,7 @@ node verify.mjs https://wallet.qkeep.app
 node verify.mjs --extension /path/to/downloaded-store.zip
 node verify.mjs --extension /path/to/unpacked-extension
 node verify.mjs --version 1.66.0 https://wallet.qkeep.app
+node verify.mjs --android /path/to/qkeep.apk
 ```
 
 Exit 0 means all listed files matched; exit 1 means verification failed. A release must exist in this copy of the repository: update your copy to verify a newer release. An explicit version detects an older release being served. Automatic version detection alone does not prevent rollback to another published release.
@@ -49,5 +50,17 @@ The two generated files `release.json` and `release/SHA256SUMS` are excluded fro
 This checks that the downloaded files match the published bytes, so users comparing the same release can detect different content. It does not prove the code is safe: the source is closed. It does not prove that the operator's published release is trustworthy. A compromised GitHub account or modified local verifier/checksum copy can defeat this check. The release header and on-screen short hash are convenient identifiers, not independent security guarantees.
 
 A one-time check does not protect later visits or service worker updates. This verifier fetches files directly over HTTP, outside the browser cache; it cannot attest which cached files an existing browser tab is executing. Repeat verification after updates. It never accesses a vault, signs a transfer or broadcasts a transaction.
+
+### Android
+
+`--android` checks the wallet files bundled in an APK: the wallet pages, the Capacitor configuration and its bridge script. Every listed file must match and no other bundled file may exist; Google Play's `assets/dexopt/` profiles are ignored. It accepts the APK published on qkeep.app/download/, whose file hash is also matched, or the base APK of an app installed from Google Play:
+
+```
+adb shell pm path app.qkeep.wallet
+adb pull /data/app/.../base.apk qkeep.apk
+node verify.mjs --android qkeep.apk
+```
+
+Google Play builds the APK for each device, so native code and the APK signature are not covered by the list. Check the signature with `apksigner verify --print-certs qkeep.apk`: the signer certificate SHA-256 must equal `signerSha256` in that version's `release.json` (also printed by the verifier). This shows that the bundled wallet code is the published release, not that the code is safe.
 
 The verifier is MIT licensed; see LICENSE. Wallet licensing is separate.

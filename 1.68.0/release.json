@@ -1,4 +1,11 @@
 {
+  "android": {
+    "apkName": "qkeep-android-1.68.0.apk",
+    "apkSha256": "861bb140c2cd859bea8834682a4107155d9a7a5f52e31a418df0d0a4471c9cef",
+    "releaseHash": "38519d386d4d918f2a616274f53342675f10bd66e3c7ddf973f9da7181d57ff6",
+    "signerSha256": "e1e95ca88a328ffabd27b66742978cc3c66deaeb42ee973ab3bbd3e641086bd5",
+    "versionCode": 16800
+  },
   "extension": {
     "metadata": true,
     "releaseHash": "af3fda5afa176ae38c878810e41774d270121715ddc40300bef7837a4c18590a",
