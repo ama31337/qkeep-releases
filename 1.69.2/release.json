@@ -1,4 +1,11 @@
 {
+  "android": {
+    "apkName": "qkeep-android-1.69.2.apk",
+    "apkSha256": "df95e520a74a26721be26d574809aa69adc4f9ce3c9dbdef02b3a1ed8533ee92",
+    "releaseHash": "b3acd34cc7ae090742fde1110773180f5494315235cb735bd5d6b78195d7b2f1",
+    "signerSha256": "e1e95ca88a328ffabd27b66742978cc3c66deaeb42ee973ab3bbd3e641086bd5",
+    "versionCode": 16902
+  },
   "extension": {
     "metadata": true,
     "releaseHash": "7df2523b1242ba126784d858410789de408b98c10ea8bac9ab08c731bec62fd2",
