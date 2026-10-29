@@ -1,0 +1,19 @@
+{
+  "extension": {
+    "metadata": true,
+    "releaseHash": "4b9534f9a7658e8e84bf22207be8982ffb9060af4f96ed85d0a978e863139664",
+    "zipName": "qtc-wallet-extension-1.70.0-store.zip",
+    "zipSha256": "55f6339cfb86797600262b637ecf2c143a4e04ded8402add9dc3f9a027dd0f2d"
+  },
+  "unpacked": {
+    "metadata": true,
+    "releaseHash": "7957f9749870b933fc906191e232d5dfa1485d6354f07063be73b1e0e89f0697",
+    "zipName": "qtc-wallet-extension-1.70.0.zip",
+    "zipSha256": "f513213d85e180afea8e76ff21a32eac770552d9836a5a5a72d1bfc5219a95b6"
+  },
+  "version": "1.70.0",
+  "web": {
+    "metadata": true,
+    "releaseHash": "b5e10bbec72b7fd7807beebb8cc28cb028fcfff88c7be3c349f25c62b9ace42c"
+  }
+}
