@@ -1,4 +1,11 @@
 {
+  "android": {
+    "apkName": "qkeep-android-1.70.5.apk",
+    "apkSha256": "356df63dbd2418366d127670e1147b4bcfba154965279e3a1dec2ecdd4562626",
+    "releaseHash": "88562d6cb4d55101617bd13f0c20b4ba1dc8881c8b42618dcd7c8a8c8b916710",
+    "signerSha256": "e1e95ca88a328ffabd27b66742978cc3c66deaeb42ee973ab3bbd3e641086bd5",
+    "versionCode": 17005
+  },
   "extension": {
     "metadata": true,
     "releaseHash": "513c49f58692a3dbed4b0894a8b1a4a60177ed63879258e0eb565ed1b494f50d",
